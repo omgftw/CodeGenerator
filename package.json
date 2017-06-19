@@ -1,0 +1,12 @@
+{
+  "name": "web-gen",
+  "version": "1.0.0",
+  "description": "",
+  "author": "",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "express": "^4.15.3",
+    "yeoman-test": "^1.6.0"
+  }
+}

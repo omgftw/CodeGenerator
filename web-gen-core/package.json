@@ -1,0 +1,16 @@
+{
+  "name": "generator-web-gen-core",
+  "version": "1.0.0",
+  "description": "",
+  "files": [
+    "generators"
+  ],
+  "author": "",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "yeoman-generator": "^1.1.1"
+  },
+  "devDependencies": {
+    "yo": "^2.0.0"
+  }
+}

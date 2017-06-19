@@ -1,0 +1,26 @@
+<div style="margin-top: 20px;">
+  <md-input-container>
+    <input mdInput placeholder="Text to generate" [(ngModel)]="displayText">
+  </md-input-container>
+</div>
+
+<div style="margin-top: 20px;">
+  <md-input-container>
+    <input mdInput placeholder="Text Color" [(ngModel)]="textColor">
+  </md-input-container>
+</div>
+
+<div style="margin-top: 20px;">
+  <md-input-container>
+    <input mdInput placeholder="Background Color" [(ngModel)]="backgroundColor">
+  </md-input-container>
+</div>
+
+<div style="margin-top: 20px;">
+  <button md-raised-button (click)="generate()">Run Generator</button>
+</div>
+
+<div *ngIf="generationSuccess" style="margin-top: 40px;">
+  Generation finished successfully! <br> 
+  New file can be found in the output folder.
+</div>
