@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
 
-var helpers = require('yeoman-test');
-var path = require('path');
+const helpers = require('yeoman-test');
+const path = require('path');
 
 /* GET api listing. */
 router.get('/', (req, res) => {
@@ -11,30 +11,33 @@ router.get('/', (req, res) => {
 
 router.post('/test', (req, res) => {
     console.log(req.body);
-    var data = req.body;
+    let data = req.body;
     helpers.run(path.join(__dirname, '../web-gen-core/generators/app'))
-        //.withOptions({ foo: 'bar' })    // Mock options passed in
-        //.withArguments(['name-x'])      // Mock the arguments
+    // .withOptions({ foo: 'bar' })    // Mock options passed in
+    // .withArguments(['name-x'])      // Mock the arguments
         .cd(__dirname)
-        .withPrompts({ generatorType: data.generatorType, generateFiles: data.generateFiles })
-        .on('end', function () {
+        .withPrompts({
+            generatorType: data.generatorType,
+            generateFiles: data.generateFiles,
+        })
+        .on('end', function() {
             res.send({
                 finished: true,
-                params: data
+                params: data,
             });
         });
 });
 
 router.post('/test-page-1', (req, res) => {
-    var data = req.body;
+    let data = req.body;
     console.log(data);
     helpers.run(path.join(__dirname, '../web-gen-core/generators/test-page-1'))
         .cd(__dirname)
         .withPrompts(data)
-        .on('end', function () {
+        .on('end', function() {
             res.send({
                 finished: true,
-                params: data
+                params: data,
             });
         });
 });

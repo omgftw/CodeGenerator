@@ -10,12 +10,12 @@ import { environment } from '../../environments/environment';
   styleUrls: ['./test-page-1.component.css']
 })
 export class TestPage1Component implements OnInit {
-  generationSuccess: boolean = false;
-  displayText: string = '';
-  textColor: string = '';
-  backgroundColor: string = '';
+  generationSuccess = false;
+  displayText = '';
+  textColor = '';
+  backgroundColor = '';
 
-  apiUrl: string = '/api/';
+  apiUrl = '/api/';
 
   constructor(private generatorRequestService: GeneratorRequestService) {
     if (!environment.production) {
@@ -28,9 +28,9 @@ export class TestPage1Component implements OnInit {
 
   generate() {
     this.generationSuccess = false;
-    let url = this.apiUrl + 'test-page-1';
+    const url = this.apiUrl + 'test-page-1';
 
-    let params = {
+    const params = {
       displayText: this.displayText,
       textColor: this.textColor,
       backgroundColor: this.backgroundColor

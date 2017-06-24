@@ -18,7 +18,7 @@ export class GeneratorRequestService {
   constructor(private http: Http) { }
 
   private extractData(res: Response) {
-    let body = res.json();
+    const body = res.json();
     return body || {};
   }
 
@@ -36,10 +36,10 @@ export class GeneratorRequestService {
   }
 
   private createWebRequest(url: string, params: Object) {
-    let headers = new Headers({ 'Content-Type': 'application/json' });
-    let options = new RequestOptions({ headers: headers });
+    const headers = new Headers({ 'Content-Type': 'application/json' });
+    const options = new RequestOptions({ headers: headers });
 
-    let request = this.http.post(url,
+    const request = this.http.post(url,
       params,
       options)
       .map(this.extractData)
@@ -54,9 +54,6 @@ export class GeneratorRequestService {
 
   generate(url: string, params: Object) {
     return this.createWebRequest(url, params);
-    // request.subscribe(
-    //   data => { console.log(data); },
-    //   error => console.log(error));
   }
 
 

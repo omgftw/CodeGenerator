@@ -1,11 +1,18 @@
-const path = require('path')
-const child_process = require('child_process')
+const path = require('path');
+const childProcess = require('child_process');
 
-const root = process.cwd()
+const root = process.cwd();
 
-function npmInstall(path)
-{
-    child_process.execSync('npm install', { cwd: path, env: process.env, stdio: 'inherit' })
+/**
+ * Runs 'npm install' on the passed directory
+ * @param {string} path
+ */
+function npmInstall(path) {
+    childProcess.execSync('npm install', {
+        cwd: path,
+        env: process.env,
+        stdio: 'inherit',
+    });
 }
 
 console.log('Installing core libraries...');
@@ -18,10 +25,18 @@ console.log('Installing UI libraries...');
 npmInstall(path.join(root, 'web-gen-ui'));
 
 console.log('Ensuring Angular CLI installation...');
-child_process.execSync('npm install -g @angular/cli', { cwd: root, env: process.env, stdio: 'inherit' })
+childProcess.execSync('npm install -g @angular/cli', {
+    cwd: root,
+    env: process.env,
+    stdio: 'inherit',
+});
 
 // console.log('Finished installing required libraries...');
 console.log('Building UI...');
-child_process.execSync('ng build --prod --env=prod', { cwd: path.join(root, 'web-gen-ui'), env: process.env, stdio: 'inherit' })
+childProcess.execSync('ng build --prod --env=prod', {
+    cwd: path.join(root, 'web-gen-ui'),
+    env: process.env,
+    stdio: 'inherit',
+});
 
-console.log("Run launch.js");
+console.log('Run launch.js');

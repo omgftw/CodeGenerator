@@ -1,6 +1,6 @@
 export class GeneratorType {
-    value: string = ""; //Generator name
-    text: string = ""; //Display text
+    value = ''; // Generator name
+    text = ''; // Display text
 
     constructor(value: string, text: string) {
         this.value = value;

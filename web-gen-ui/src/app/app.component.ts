@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Http, Response, Headers, RequestOptions } from '@angular/http';
+import { Http } from '@angular/http';
 import { environment } from '../environments/environment';
 
 import { GeneratorRequestService, GENERATOR_TYPES } from './services/generator-request.service';
@@ -13,11 +13,11 @@ import { GeneratorType } from './models/generator-type';
 export class AppComponent {
   title = 'app';
   generatorTypes: GeneratorType[];
-  generateFiles: boolean = true;
+  generateFiles = true;
   generatorType: string;
-  generationSuccess: boolean = false;
+  generationSuccess = false;
 
-  apiUrl: string = '/api/';
+  apiUrl = '/api/';
 
   constructor(private http: Http, private generatorRequestService: GeneratorRequestService) {
     this.generatorTypes = GENERATOR_TYPES;
@@ -29,15 +29,15 @@ export class AppComponent {
 
   generate() {
     this.generationSuccess = false;
-    let url = this.apiUrl + 'test';
+    const url = this.apiUrl + 'test';
 
-    let params = {
+    const params = {
         generatorType: this.generatorType,
         generateFiles: this.generateFiles
       };
 
     this.generatorRequestService.generate(url, params).then(x => {
       this.generationSuccess = true;
-    }) 
+    })
   }
 }

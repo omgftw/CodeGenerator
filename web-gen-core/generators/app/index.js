@@ -1,28 +1,31 @@
-var Generator = require('yeoman-generator');
+const Generator = require('yeoman-generator');
 
-var gen = {};
+let gen = {};
 
-var test1 = function (genFiles) {
-    console.log("test1");
+const test1 = function(genFiles) {
+    console.log('test1');
     console.log(genFiles);
     gen.fs.copyTpl(
         gen.templatePath('testTemplate1.html'),
         gen.destinationPath('testTemplate1.html'),
-        { title: 'You chose option 1' }
+        {title: 'You chose option 1'}
     );
 };
 
-var test2 = function (genFiles) {
-    console.log("test2");
+const test2 = function(genFiles) {
+    console.log('test2');
     console.log(genFiles);
     gen.fs.copyTpl(
         gen.templatePath('testTemplate1.html'),
         gen.destinationPath('testTemplate1.html'),
-        { title: 'You chose option 2' }
+        {title: 'You chose option 2'}
     );
 };
 
 module.exports = class extends Generator {
+    /**
+     * First method called
+     */
     initializing() {
         gen = this;
 
@@ -32,21 +35,20 @@ module.exports = class extends Generator {
         console.log(gen.sourceRoot());
     }
 
-    method1() {
-        console.log('arbitrary first method');
-    };
-
+    /**
+     * Gets user input
+     * @return {Promise<inquirer.Answers>} nothing
+     */
     prompting() {
-
         return this.prompt([{
             type: 'input',
             name: 'generatorType',
             message: 'What would you like to generate? (1 or 2)',
-            default: 1//this.appname // Default to current folder name
+            default: 1, // this.appname // Default to current folder name
         }, {
             type: 'confirm',
             name: 'generateFiles',
-            message: 'Would you like to generate files?'
+            message: 'Would you like to generate files?',
         }]).then((answers) => {
             console.log(answers.generatorType);
             if (answers.generatorType == 1) {
