@@ -8,5 +8,9 @@
     "body-parser": "^1.17.2",
     "express": "^4.15.3",
     "yeoman-test": "^1.6.0"
+  },
+  "devDependencies": {
+    "eslint": "^3.19.0",
+    "eslint-config-google": "^0.8.0"
   }
 }
