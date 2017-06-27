@@ -15,16 +15,16 @@ function npmInstall(path) {
     });
 }
 
-console.log('Installing core libraries...');
+console.log('[1/5] Installing core libraries...');
 npmInstall(root);
 
-console.log('Installing generator libraries...');
+console.log('[2/5] Installing generator libraries...');
 npmInstall(path.join(root, 'web-gen-core'));
 
-console.log('Installing UI libraries...');
+console.log('[3/5] Installing UI libraries...');
 npmInstall(path.join(root, 'web-gen-ui'));
 
-console.log('Ensuring Angular CLI installation...');
+console.log('[4/5] Ensuring Angular CLI installation...');
 childProcess.execSync('npm install -g @angular/cli', {
     cwd: root,
     env: process.env,
@@ -32,7 +32,7 @@ childProcess.execSync('npm install -g @angular/cli', {
 });
 
 // console.log('Finished installing required libraries...');
-console.log('Building UI...');
+console.log('[5/5] Building UI...');
 childProcess.execSync('ng build --prod --env=prod', {
     cwd: path.join(root, 'web-gen-ui'),
     env: process.env,
