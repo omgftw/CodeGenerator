@@ -18,7 +18,7 @@ function npmCheckInstalled(package, global) {
             stdio: 'inherit',
         });
 
-        npm.stdout.on('data', function (data) {
+        npm.stdout.on('data', function(data) {
             resolve(data.indexOf('-- (empty)') === -1);
         });
     });
