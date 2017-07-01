@@ -4,6 +4,8 @@ const router = express.Router();
 const helpers = require('yeoman-test');
 const path = require('path');
 
+const settings = require('../generator').settings;
+
 /* GET api listing. */
 router.get('/', (req, res) => {
     res.send('api works');

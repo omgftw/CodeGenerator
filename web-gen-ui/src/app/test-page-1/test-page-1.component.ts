@@ -4,6 +4,8 @@ import { GeneratorRequestService } from '../services/generator-request.service';
 
 import { environment } from '../../environments/environment';
 
+import { settings } from '../../../../generator';
+
 @Component({
   selector: 'app-test-page-1',
   templateUrl: './test-page-1.component.html',
@@ -14,13 +16,15 @@ export class TestPage1Component implements OnInit {
   displayText = '';
   textColor = '';
   backgroundColor = '';
+  settings: any;
 
-  apiUrl = '/api/';
+  apiUrl = settings.apiUrl;
 
   constructor(private generatorRequestService: GeneratorRequestService) {
     if (!environment.production) {
-      this.apiUrl = 'http://localhost:3000/api/';
+      this.apiUrl = settings.devApiUrl;
     }
+    this.settings = settings;
   }
 
   ngOnInit() {
