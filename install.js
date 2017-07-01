@@ -18,7 +18,7 @@ function npmCheckInstalled(package, global) {
             stdio: 'inherit',
         });
 
-        npm.stdout.on('data', function(data) {
+        npm.stdout.on('data', function (data) {
             resolve(data.indexOf('-- (empty)') === -1);
         });
     });
@@ -133,7 +133,26 @@ pendingInstalls.push(typescriptCheckPromise);
 // Wait for libraries to finish installing
 // then run ng build
 Promise.all(pendingInstalls).then(() => {
-    new Promise((resolve) => {
+    console.log('All installations completed...');
+    console.log('Performing post-install tasks...')
+
+    let pendingPostInstalls = [];
+    let compilePromise = new Promise((resolve) => {
+        console.log('Compiling Settings Files...');
+        let child =
+            childProcess.exec('tsc generator.ts', {
+                cwd: path.join(root),
+                env: process.env,
+                stdio: 'inherit',
+            });
+
+        child.on('exit', () => {
+            resolve();
+        });
+    });
+    pendingPostInstalls.push(compilePromise);
+
+    let buildPromise = new Promise((resolve) => {
         console.log('Building UI...');
         let child =
             childProcess.exec('ng build --prod --env=prod', {
@@ -145,8 +164,11 @@ Promise.all(pendingInstalls).then(() => {
         child.on('exit', () => {
             resolve();
         });
-    }).then(() => {
-        console.log('All installations completed...');
+    });
+    pendingPostInstalls.push(buildPromise);
+
+    Promise.all(pendingPostInstalls).then(() => {
+        console.log('All post-install tasks completed...')
         console.log('Run "node launch.js"');
     });
 });

@@ -298,3 +298,6 @@ __pycache__/
 
 # Yarn lock file
 yarn.lock
+
+# Files generated from .ts files
+generator.js
