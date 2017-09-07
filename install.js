@@ -18,7 +18,7 @@ function npmCheckInstalled(package, global) {
             stdio: 'inherit',
         });
 
-        npm.stdout.on('data', function (data) {
+        npm.stdout.on('data', function(data) {
             resolve(data.indexOf('-- (empty)') === -1);
         });
     });
@@ -39,6 +39,11 @@ function npmInstall(path) {
         child.on('exit', () => {
             resolve();
         });
+
+        child.on('error', (err) => {
+            console.log(err);
+            resolve();
+        });
     });
 }
 
@@ -57,6 +62,11 @@ function npmInstallPackage(package, global) {
         });
 
         child.on('exit', () => {
+            resolve();
+        });
+
+        child.on('error', (err) => {
+            console.log(err);
             resolve();
         });
     });
@@ -113,49 +123,54 @@ pendingInstalls.push(angularCliCheckPromise);
 
 // console.log('Checking for existing global TypeScript installation...');
 // Installs TypeScript globally if it isn't already installed
-let typescriptCheckPromise =
-    npmCheckInstalled('typescript', true)
-        .then((installed) => {
-            if (installed) {
-                console.log('TypeScript already installed. ' +
-                    'Skipping installation...');
-            } else {
-                console.log('No global TypeScript installation found. ' +
-                    'Installing now...');
-                return npmInstallPackage('typescript', true).then(() => {
-                    console.log('TypeScript installation finished...');
-                });
-            }
-        });
-pendingInstalls.push(typescriptCheckPromise);
+// let typescriptCheckPromise =
+//     npmCheckInstalled('typescript', true)
+//         .then((installed) => {
+//             if (installed) {
+//                 console.log('TypeScript already installed. ' +
+//                     'Skipping installation...');
+//             } else {
+//                 console.log('No global TypeScript installation found. ' +
+//                     'Installing now...');
+//                 return npmInstallPackage('typescript', true).then(() => {
+//                     console.log('TypeScript installation finished...');
+//                 });
+//             }
+//         });
+// pendingInstalls.push(typescriptCheckPromise);
 
 
 // Wait for libraries to finish installing
 // then run ng build
 Promise.all(pendingInstalls).then(() => {
     console.log('All installations completed...');
-    console.log('Performing post-install tasks...')
+    console.log('Performing post-install tasks...');
 
     let pendingPostInstalls = [];
-    let compilePromise = new Promise((resolve) => {
-        console.log('Compiling Settings Files...');
-        let child =
-            childProcess.exec('tsc generator.ts', {
-                cwd: path.join(root),
-                env: process.env,
-                stdio: 'inherit',
-            });
+    // let compilePromise = new Promise((resolve) => {
+    //     console.log('Compiling Settings Files...');
+    //     let child =
+    //         childProcess.exec('tsc generator.ts', {
+    //             cwd: path.join(root),
+    //             env: process.env,
+    //             stdio: 'inherit',
+    //         });
 
-        child.on('exit', () => {
-            resolve();
-        });
-    });
-    pendingPostInstalls.push(compilePromise);
+    //     child.on('exit', () => {
+    //         resolve();
+    //     });
+
+    //     child.on('error', (err) => {
+    //         console.log(err);
+    //         resolve();
+    //     });
+    // });
+    // pendingPostInstalls.push(compilePromise);
 
     let buildPromise = new Promise((resolve) => {
         console.log('Building UI...');
         let child =
-            childProcess.exec('ng build --prod --env=prod', {
+            childProcess.exec('ng build --env=prod', {
                 cwd: path.join(root, 'web-gen-ui'),
                 env: process.env,
                 stdio: 'inherit',
@@ -164,11 +179,16 @@ Promise.all(pendingInstalls).then(() => {
         child.on('exit', () => {
             resolve();
         });
+
+        child.on('error', (err) => {
+            console.log(err);
+            resolve();
+        });
     });
     pendingPostInstalls.push(buildPromise);
 
     Promise.all(pendingPostInstalls).then(() => {
-        console.log('All post-install tasks completed...')
+        console.log('All post-install tasks completed...');
         console.log('Run "node launch.js"');
     });
 });

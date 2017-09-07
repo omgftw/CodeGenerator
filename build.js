@@ -10,7 +10,7 @@ childProcess.execSync('tsc generator.ts', {
 });
 
 console.log('Building UI...');
-childProcess.execSync('ng build --prod --env=prod', {
+childProcess.execSync('ng build --env=prod', {
     cwd: path.join(root, 'web-gen-ui'),
     env: process.env,
     stdio: 'inherit',
